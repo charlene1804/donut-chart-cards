@@ -15,7 +15,8 @@ function App() {
       //   method: "GET",
       //   url: ``,
       // });
-      // setData(response);
+      // setData(response)
+
       setData(mockData);
     } catch (error) {
       console.log(error);
@@ -27,10 +28,24 @@ function App() {
     getData();
   }, []);
 
+  function addCloneToData(cardToClone) {
+    // I would make this function async if I needed to modify the data via POST request to API
+    const updatedData = data;
+
+    updatedData.profiles.push(cardToClone);
+    setData({ ...updatedData });
+  }
+
   return (
     <div className="App">
-      {data.profiles?.map((profile) => {
-        return <DonutChartCard key={profile.title} data={profile} />;
+      {data.profiles?.map((profile, index) => {
+        return (
+          <DonutChartCard
+            key={index}
+            profile={profile}
+            addCloneToData={addCloneToData}
+          />
+        );
       })}
     </div>
   );
